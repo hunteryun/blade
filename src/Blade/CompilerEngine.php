@@ -1,6 +1,6 @@
 <?php
 
-namespace Hunter\Engine\Templating\Blade;
+namespace Hunter\Engine\Blade;
 
 use ErrorException;
 use Hunter\Engine\Templating\Blade\CompilerInterface;

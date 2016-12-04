@@ -6,7 +6,7 @@
  * Blade Environment
  */
 
-namespace Hunter\Engine\Templating\Blade;
+namespace Hunter\Engine\Blade;
 
 class Environment {
 

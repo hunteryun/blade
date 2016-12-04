@@ -5,12 +5,12 @@
  *
  * Theme
  */
- 
-namespace Hunter\Engine\Templating;
 
-use Hunter\Engine\Templating\BladeEngine;
-use Hunter\Engine\Templating\Blade\Loader;
-use Hunter\Engine\Templating\Blade\Environment;
+namespace Hunter\Engine;
+
+use Hunter\Engine\BladeEngine;
+use Hunter\Engine\Blade\Loader;
+use Hunter\Engine\Blade\Environment;
 
 class Theme {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hunter\Engine\Templating\Blade;
+namespace Hunter\Engine\Blade;
 
 abstract class Compiler {
 

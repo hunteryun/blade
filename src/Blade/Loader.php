@@ -6,7 +6,7 @@
  * Blade Loader
  */
 
-namespace Hunter\Engine\Templating\Blade;
+namespace Hunter\Engine\Blade;
 
 class Loader {
 

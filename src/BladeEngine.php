@@ -6,7 +6,7 @@
  * BladeEngine
  */
 
-namespace Hunter\Engine\Templating;
+namespace Hunter\Engine;
 
 use ErrorException;
 
