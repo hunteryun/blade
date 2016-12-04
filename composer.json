@@ -1,0 +1,27 @@
+{
+    "name": "hunteryun/blade",
+    "description": "A Blade Template Engine for Drupal.",
+    "license": "MIT",
+    "homepage": "http://hunteryun.com",
+    "support": {
+        "issues": "https://github.com/hunteryun/blade/issues",
+        "source": "https://github.com/hunteryun/blade"
+    },
+    "authors": [
+        {
+            "name": "DrupalHunter",
+            "email": "498023235@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Hunter\\Engine\\": "src/"
+        }
+    }
+}
