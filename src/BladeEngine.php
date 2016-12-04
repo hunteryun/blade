@@ -8,7 +8,8 @@
 
 namespace Hunter\Engine;
 
-use ErrorException;
+use Hunter\Engine\Blade\Loader;
+use Hunter\Engine\Blade\Environment;
 
 class BladeEngine implements EngineInterface {
 
@@ -28,10 +29,32 @@ class BladeEngine implements EngineInterface {
     protected $environment;
 
     /**
+     * Blade加载器
+     */
+    protected $loader;
+
+    /*
+     * 模板存放路径
+     *
+     * @var array
+     */
+    protected $theme_path = array();
+
+    /*
+     * 缓存路径
+     *
+     * @var array
+     */
+    protected $cache_path;
+
+    /**
      * 析构函数
      */
-    public function __construct($environment) {
-        $this->environment = $environment;
+    public function __construct($theme_path, $cache_path) {
+        $this->theme_path = $theme_path;
+        $this->cache_path = $cache_path;
+        $this->loader = new Loader($this->theme_path, $this->cache_path);
+        $this->environment = new Environment($this->loader, array());;
     }
 
     /**
