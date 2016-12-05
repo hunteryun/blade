@@ -18,6 +18,9 @@ and then `require` them in your code.
 <?php
 
  use Hunter\Engine\BladeEngine;
+ 
+ $path = ['/view_path'];         // your view file path, it's an array
+ $cachePath = '/cache_path';     // compiled cache file path
 
  $engine = new BladeEngine($path, $cachePath);
  $variables['name'] = 'Drupal Hunter';
