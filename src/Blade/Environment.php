@@ -51,9 +51,7 @@ class Environment {
      */
     public function __construct($loader = null, $options = array()) {
         $this->loader  = $loader;
-        $this->options = $options + array(
-            'cache' => false,
-        );
+        $this->options = $options;
         $this->addGlobal('__env', $this);
     }
 
@@ -105,7 +103,7 @@ class Environment {
 
     public function display($name, $parameters = array()) {
       $this->addGlobal('messages', $this->renderMessages());
-      $compile = new BladeCompiler($name, $this->loader->getCachePath());
+      $compile = new BladeCompiler($name, $this->options);
       $compiled = $compile->getCompiledPath($name);
 
       if($this->exists($compiled, TRUE)){

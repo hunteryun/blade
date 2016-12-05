@@ -54,7 +54,7 @@ class BladeEngine implements EngineInterface {
         $this->theme_path = $theme_path;
         $this->cache_path = $cache_path;
         $this->loader = new Loader($this->theme_path, $this->cache_path);
-        $this->environment = new Environment($this->loader, array());;
+        $this->environment = new Environment($this->loader, array('theme_path' => $theme_path, 'cache_path' => $this->cache_path));
     }
 
     /**

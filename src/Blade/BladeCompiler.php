@@ -63,7 +63,7 @@ class BladeCompiler extends Compiler implements CompilerInterface {
      *
      * @var string
      */
-    protected $echoFormat = 'e(%s)';
+    protected $echoFormat = '%s';
 
     /**
      * Array of footer lines to be added to template.

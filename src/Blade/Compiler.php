@@ -31,11 +31,11 @@ abstract class Compiler {
      * @param  string  $cachePath
      * @return void
      */
-    public function __construct($file, $cachePath)
+    public function __construct($file, $options)
     {
         $this->files = $file;
-        $this->cachePath = $cachePath;
-        $this->loader = new Loader(DRUPAL_ROOT.'/core/themes/stark/templates', $cachePath);
+        $this->cachePath = $options['cache_path'];
+        $this->loader = new Loader($options['theme_path'], $options['cache_path']);
     }
 
     /**
