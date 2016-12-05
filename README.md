@@ -15,12 +15,12 @@ and then `require` them in your code.
 ### Usage
 
 ```php
-
 <?php
+
  use Hunter\Engine\BladeEngine;
 
  $engine = new BladeEngine($path, $cachePath);
- $variables['name'] = 'lanyulu';
+ $variables['name'] = 'Drupal Hunter';
 
  return $engine->setTemplate('hello.html')->setParameters($variables)->render('hello.html', $variables);
  
