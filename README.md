@@ -15,14 +15,15 @@ and then `require` them in your code.
 ### Usage
 
 ```php
+
 <?php
+ use Hunter\Engine\BladeEngine;
+
  $engine = new BladeEngine($path, $cachePath);
  $variables['name'] = 'lanyulu';
 
-  return $engine->setTemplate('hello.html')->setParameters($variables)->render('hello.html', $variables);
+ return $engine->setTemplate('hello.html')->setParameters($variables)->render('hello.html', $variables);
+ 
 ```
-
-You can enjoy almost all the features of blade with this extension.
-However, remember that some of exclusive features are removed.
 
 Documentation: [http://laravel.com/docs/5.3/blade](http://laravel.com/docs/5.3/blade)
