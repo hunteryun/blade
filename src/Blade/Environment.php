@@ -102,7 +102,6 @@ class Environment {
     }
 
     public function display($name, $parameters = array()) {
-      $this->addGlobal('messages', $this->renderMessages());
       $compile = new BladeCompiler($name, $this->options);
       $compiled = $compile->getCompiledPath($name);
 
@@ -307,29 +306,6 @@ class Environment {
      */
     public function doneRendering() {
         return $this->renderCount == 0;
-    }
-
-    /**
-     * Handle render session message.
-     *
-     * @return string
-     */
-    public function renderMessages($type = NULL) {
-      $messages = drupal_get_messages($type);
-
-      if(!empty($messages)){
-        foreach($messages as $type => $message){
-          $out = '<div class="messages '.$type.'">';
-          $out .= '<ul>';
-          foreach($message as $item){
-            $out .= '<li>'.$item.'</li>';
-          }
-          $out .= '</ul>';
-          $out .= '</div>';
-        }
-        return $out;
-      }
-      return FALSE;
     }
 
 }
