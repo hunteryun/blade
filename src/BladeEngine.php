@@ -126,6 +126,13 @@ class BladeEngine implements EngineInterface {
     }
 
     /**
+     * 获取Loader
+     */
+    public function getLoader() {
+        return $this->loader;
+    }
+
+    /**
      * 添加全局变量
      */
     public function addGlobal($key, $value) {
