@@ -8,7 +8,16 @@
 
 namespace Hunter\Engine\Blade;
 
+use Hunter\Engine\BladeEngine;
+
 class BladeCompiler extends Compiler implements CompilerInterface {
+
+    /**
+     * The engine object.
+     *
+     * @var string
+     */
+    protected $engine;
 
     /**
      * All custom "directive" handlers.
@@ -78,6 +87,23 @@ class BladeCompiler extends Compiler implements CompilerInterface {
      * @var int
      */
     protected $forelseCounter = 0;
+
+    /**
+     * Create a new Blade view engine instance.
+     *
+     * @return void
+     */
+    public function initengine()
+    {
+      $default_theme = \Drupal::configFactory()->getEditable('system.theme')->get('default');
+      $theme_path = drupal_get_path('theme', $default_theme);
+      $path = [DRUPAL_ROOT.'/'.$theme_path.'/templates'];
+      $cache_path = 'public://hunter_cache';
+
+      $this->engine = new BladeEngine($path, $cache_path);
+
+      return $this->engine;
+    }
 
     /**
      * Compile the view at the given path.
@@ -343,17 +369,6 @@ class BladeCompiler extends Compiler implements CompilerInterface {
     }
 
     /**
-     * Compile the yield statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileYield($expression)
-    {
-        return "<?php echo \$__env->yieldContent{$expression}; ?>";
-    }
-
-    /**
      * Compile the show statements into valid PHP.
      *
      * @param  string  $expression
@@ -362,17 +377,6 @@ class BladeCompiler extends Compiler implements CompilerInterface {
     protected function compileShow($expression)
     {
         return '<?php echo $__env->yieldSection(); ?>';
-    }
-
-    /**
-     * Compile the section statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileSection($expression)
-    {
-        return "<?php \$__env->startSection{$expression}; ?>";
     }
 
     /**
@@ -386,16 +390,6 @@ class BladeCompiler extends Compiler implements CompilerInterface {
         return '<?php $__env->appendSection(); ?>';
     }
 
-    /**
-     * Compile the end-section statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileEndsection($expression)
-    {
-        return '<?php $__env->stopSection(); ?>';
-    }
 
     /**
      * Compile the stop statements into valid PHP.
@@ -589,25 +583,6 @@ class BladeCompiler extends Compiler implements CompilerInterface {
     }
 
     /**
-     * Compile the extends statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileExtends($expression)
-    {
-        if (strpos($expression, '(') === 0) {
-            $expression = substr($expression, 1, -1);
-        }
-
-        $data = "<?php echo \$__env->make($expression, array_except(get_defined_vars())); ?>";
-
-        $this->footer[] = $data;
-
-        return '';
-    }
-
-    /**
      * Compile the include statements into valid PHP.
      *
      * @param  string  $expression
@@ -615,44 +590,14 @@ class BladeCompiler extends Compiler implements CompilerInterface {
      */
     protected function compileInclude($expression)
     {
-        if (strpos($expression, '(') === 0) {
-            $expression = substr($expression, 1, -1);
-        }
+        $expression = substr($expression, 2, strlen($expression)-4);
+        $bladeengine = $this->initengine();
+        $variables['site_root'] = base_path();
+        $bladeengine->render($expression.'.html', $variables);
+        $cache_name = md5($expression.'.html');
+        $cache_path = 'public://hunter_cache';
 
-        return "<?php echo \$__env->make($expression, array_except(get_defined_vars())); ?>";
-    }
-
-    /**
-     * Compile the stack statements into the content.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileStack($expression)
-    {
-        return "<?php echo \$__env->yieldContent{$expression}; ?>";
-    }
-
-    /**
-     * Compile the push statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compilePush($expression)
-    {
-        return "<?php \$__env->startSection{$expression}; ?>";
-    }
-
-    /**
-     * Compile the endpush statements into valid PHP.
-     *
-     * @param  string  $expression
-     * @return string
-     */
-    protected function compileEndpush($expression)
-    {
-        return '<?php $__env->appendSection(); ?>';
+        return "<?php include('$cache_path/$cache_name.php'); ?>";
     }
 
     /**
